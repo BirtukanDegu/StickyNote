@@ -1,10 +1,16 @@
-import React from 'react'
+import { useRef, useEffect } from 'react'
 import Trash from '../icons/Trash'
 
 const NoteCard = ({ note }) => {
     const position = JSON.parse(note.position)
     const colors = JSON.parse(note.colors)
     const body = JSON.parse(note.body)
+
+    const textAreaRef = useRef(null)
+
+    useEffect(() => {
+        autoGrow(textAreaRef);
+    }, []);
     
     function autoGrow(textAreaRef) {
         const { current } = textAreaRef;
@@ -26,8 +32,10 @@ const NoteCard = ({ note }) => {
 
             <div className="card-body">
                 <textarea
+                    ref={textAreaRef}
                     defaultValue={body}
                     style={{color: colors.colorText}}
+                    onInput={() => autoGrow(textAreaRef)}                   
                  >
 
                 </textarea>
