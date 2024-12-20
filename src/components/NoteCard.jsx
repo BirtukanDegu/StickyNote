@@ -2,6 +2,7 @@ import { useRef, useEffect, useState } from 'react'
 import Trash from '../icons/Trash'
 import { setNewOffset } from '../utils/setNewOffset';
 import { autoGrow } from '../utils/autoGrow';
+import { setZIndex } from '../utils/setZIndex';
 
 const NoteCard = ({ note }) => {
     const [position, setPositon] = useState(JSON.parse(note.position));
@@ -23,6 +24,8 @@ const NoteCard = ({ note }) => {
     
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
+
+        setZIndex(cardRef.current);
     };
 
     const mouseMove = (e) => {
@@ -70,7 +73,8 @@ const NoteCard = ({ note }) => {
                     ref={textAreaRef}
                     defaultValue={body}
                     style={{color: colors.colorText}}
-                    onInput={() => autoGrow(textAreaRef)}                   
+                    onInput={() => autoGrow(textAreaRef)}
+                    onFocus={() => setZIndex(cardRef.current)}                   
                  >
 
                 </textarea>
