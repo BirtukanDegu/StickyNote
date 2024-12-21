@@ -3,11 +3,12 @@ import Trash from '../icons/Trash'
 import { setNewOffset } from '../utils/setNewOffset';
 import { autoGrow } from '../utils/autoGrow';
 import { setZIndex } from '../utils/setZIndex';
+import { bodyParser } from '../utils/bodyParser';
 
 const NoteCard = ({ note }) => {
     const [position, setPositon] = useState(JSON.parse(note.position));
     const colors = JSON.parse(note.colors)
-    const body = JSON.parse(note.body)
+    const body = bodyParser(note.body);
 
     let mouseStartPos = { x: 0, y: 0 };
     const cardRef = useRef(null);
