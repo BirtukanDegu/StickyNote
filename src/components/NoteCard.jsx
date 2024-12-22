@@ -4,8 +4,13 @@ import { setNewOffset } from '../utils/setNewOffset';
 import { autoGrow } from '../utils/autoGrow';
 import { setZIndex } from '../utils/setZIndex';
 import { bodyParser } from '../utils/bodyParser';
+import { db } from "../appwrite/databases";
+import Spinner from '../icons/Spinner';
 
 const NoteCard = ({ note }) => {
+    const [saving, setSaving] = useState(false);
+    const keyUpTimer = useRef(null);
+
     const [position, setPositon] = useState(JSON.parse(note.position));
     const colors = JSON.parse(note.colors)
     const body = bodyParser(note.body);
@@ -49,6 +54,34 @@ const NoteCard = ({ note }) => {
     const mouseUp = () => {
         document.removeEventListener("mousemove", mouseMove);
         document.removeEventListener("mouseup", mouseUp);
+         
+        const newPosition = setNewOffset(cardRef.current);
+        saveData("position", newPosition);
+    };
+
+    const saveData = async (key, value) => {
+        const payload = { [key]: JSON.stringify(value) };
+        try {
+            await db.notes.update(note.$id, payload);
+        } catch (error) {
+            console.error(error);
+        }
+        setSaving(false);
+    };
+
+    const handleKeyUp = async () => {
+        //1 - Initiate "saving" state
+        setSaving(true);
+    
+        //2 - If we have a timer id, clear it so we can add another two seconds
+        if (keyUpTimer.current) {
+            clearTimeout(keyUpTimer.current);
+        }
+    
+        //3 - Set timer to trigger save in 2 seconds
+        keyUpTimer.current = setTimeout(() => {
+            saveData("body", textAreaRef.current.value);
+        }, 2000);
     };
 
     return (
@@ -67,6 +100,15 @@ const NoteCard = ({ note }) => {
                 style={{backgroundColor: colors.colorHeader}}
             >
                 <Trash/>
+
+                {saving && (
+                    <div className="card-saving">
+                        <Spinner color={colors.colorText} />
+                        <span style={{ color: colors.colorText }}>
+                            Saving...
+                        </span>
+                    </div>
+                )}
             </div>
 
             <div className="card-body">
@@ -75,7 +117,8 @@ const NoteCard = ({ note }) => {
                     defaultValue={body}
                     style={{color: colors.colorText}}
                     onInput={() => autoGrow(textAreaRef)}
-                    onFocus={() => setZIndex(cardRef.current)}                   
+                    onFocus={() => setZIndex(cardRef.current)}
+                    onKeyUp={handleKeyUp}                   
                  >
 
                 </textarea>
