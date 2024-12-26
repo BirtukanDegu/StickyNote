@@ -34,8 +34,8 @@ body{
 
 #app{
   background-color:#212228;
-  background-image: linear-gradient(#292a30 .1em, transparent .1em), linear-gradient(90deg, #292a30 .1em, transparent .1em);
-  background-size: 4em 4em;
+  background: radial-gradient(#33322C 1px, transparent 1px);
+  background-size: 16px 16px;
   height: 100vh;
   position:relative;
   overflow: auto;
@@ -96,7 +96,7 @@ textarea:focus{
   left:1em;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #35363e;
+  background-color: rgba(51, 50, 44, 0.5);
   padding: 1em 1em;
   border-radius: 40px;
 
@@ -112,7 +112,7 @@ z-index: 10000;
 
 
 #add-btn{
-  background-color: rgba(107,107,107,1);
+  background-color: rgb(2, 6, 24);
   display: flex;
   justify-content: center;
   align-items: center;
