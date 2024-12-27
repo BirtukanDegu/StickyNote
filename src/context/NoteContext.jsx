@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import Spinner from "../icons/Spinner";
 import { db } from "../appwrite/databases";
+import Loader from "../icons/Loader";
  
 export const NoteContext = createContext();
  
@@ -33,7 +33,7 @@ const NotesProvider = ({ children }) => {
                         height: "100vh",
                     }}
                 >
-                    <Spinner size="100" />
+                    <Loader size="100" />
                 </div>
             ) : (
                 children
