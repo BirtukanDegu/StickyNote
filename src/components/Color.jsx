@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NoteContext } from "../context/NoteContext";
 import { db } from "../appwrite/databases";
+import { toast } from "sonner";
 
 const Color = ({ color }) => {
     const { selectedNote, notes, setNotes } = useContext(NoteContext);
@@ -25,7 +26,9 @@ const Color = ({ color }) => {
             });
         } catch (error) {
             console.error("Error changing color:", error);
-            alert("You must select a note before changing colors");
+            toast.error('Ohh No!', {
+                description: 'You must select a note before changing colors',
+            })
         }
     };
  
