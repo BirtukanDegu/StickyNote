@@ -1,13 +1,74 @@
-# React + Vite
+# Sticky Notes App 📌
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and interactive web application for creating, managing, and customizing digital sticky notes. Built with modern web technologies, this app allows users to quickly jot down thoughts, reminders, and tasks with an intuitive interface.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Create Notes:** Easily add new sticky notes with a dedicated "Add" button (Plus icon).
+*   **Edit Notes:** Click on any note to edit its content.
+*   **Autosave:** Notes are automatically saved 2 seconds after you stop typing, preventing excessive save operations while ensuring your work isn't lost.
+*   **Delete Notes:** Remove notes you no longer need with a dedicated delete button (Trash icon) on each note.
+*   **Color Customization:** Personalize your notes by choosing from a palette of available colors via the note controls.
+*   **Active Note Prioritization:** Selected or currently modified notes are automatically brought to the front (z-index management) for better visibility and focus.
+*   **Centralized State Management:** Utilizes React Context API for efficient state management and easier access to note data across components.
+*   **Component-Based Architecture:** Built with reusable React components for better maintainability and scalability.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-"# StickyNote" 
+*   **Frontend:**
+    *   React.js
+    *   React Context API (for state management)
+    *   JavaScript (ES6+)
+    *   HTML5
+    *   CSS3 
+*   **Build Tool / Development Environment:**
+    *   Vite
+    
+## ⚙️ Getting Started
+
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+*   Node.js (v14.x or higher recommended)
+*   npm or yarn
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/BirtukanDegu/StickyNote.git
+    cd StickyNote
+    ```
+
+2.  **Install dependencies:**
+    Using npm:
+    ```bash
+    npm install
+    ```
+    Or using yarn:
+    ```bash
+    yarn install
+    ```
+
+3.  **Run the development server:**
+    Using npm:
+    ```bash
+    npm run dev
+    ```
+    Or using yarn:
+    ```bash
+    yarn dev
+    ```
+    This will usually open the app in your default browser (often at `http://localhost:5173` or the next available port). Check your terminal for the exact address.
+
+4.  **Build for production:**
+    Using npm:
+    ```bash
+    npm run build
+    ```
+    Or using yarn:
+    ```bash
+    yarn build
+    ```
+    This will create a `dist` folder with the production-ready assets.
