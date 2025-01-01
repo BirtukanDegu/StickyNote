@@ -6,9 +6,9 @@ export const fakeData = [
         ),
         colors: JSON.stringify({
             id: "color-purple",
-            colorHeader: "#FED0FD",
-            colorBody: "#FEE5FD",
-            colorText: "#18181A",
+            colorHeader: "#b693fd",
+            colorBody: "#b693fd",
+            colorText: "#18181A"
         }),
         position: JSON.stringify({ x: 505, y: 10 }),
     },
@@ -19,8 +19,8 @@ export const fakeData = [
         ),
         colors: JSON.stringify({
             id: "color-blue",
-            colorHeader: "#9BD1DE",
-            colorBody: "#A6DCE9",
+            colorHeader: "#00d4fe",
+            colorBody: "#00d4fe",
             colorText: "#18181A",
         }),
         position: JSON.stringify({ x: 305, y: 110 }),
@@ -32,8 +32,8 @@ export const fakeData = [
         ),
         colors: JSON.stringify({
             id: "color-yellow",
-            colorHeader: "#FFEFBE",
-            colorBody: "#FFF5DF",
+            colorHeader: "#fec971",
+            colorBody: "#fec971",
             colorText: "#18181A",
         }),
         position: JSON.stringify({ x: 605, y: 500 }),

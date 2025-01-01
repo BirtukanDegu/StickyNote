@@ -12,6 +12,23 @@
   --spinner-animation-speed: 2s;
 }
 
+.custom-scroll::-webkit-scrollbar {
+  width: 0px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: lightgray;
+  transition: 300ms;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: gray;
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -42,8 +59,9 @@ body{
 }
 
 .card{
-  width: 400px;
-  border-radius: 5px;
+  width: 280px;
+  min-height: 250px;
+  border-radius: 24px;
   cursor: pointer;
   position: absolute;
   box-shadow:
@@ -57,17 +75,29 @@ body{
 
 .card-header {
   background-color: #9bd1de;
-  border-radius: 5px 5px 0 0;
+  border-radius: 24px 24px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
 }
 
+.trash-btn{
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+}
+
 .card-body{
   padding: 1em;
-  border-radius: 0 0 5px 5px;
-
+  border-radius: 0 0 24px 24px;
 }
 
 .card-body textarea{

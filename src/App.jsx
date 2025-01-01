@@ -5,7 +5,7 @@ import NotesPage from "./pages/NotesPage";
 function App() {
 
   return (
-    <div id='app'>
+    <div id='app' className="custom-scroll">
       <NotesProvider>
         <Toaster position="bottom-right" richColors closeButton />
         <NotesPage/>

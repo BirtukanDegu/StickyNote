@@ -18,7 +18,7 @@ const DeleteButton = ({ noteId }) => {
     };
  
     return (
-        <div onClick={handleDelete}>
+        <div className="trash-btn" onClick={handleDelete}>
             <Trash />
         </div>
     );

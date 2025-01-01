@@ -1,11 +1,11 @@
-const Trash = ({ size = "24" }) => {
+const Trash = ({ size = "20" }) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width={size}
             height={size}
-            stroke="#000000"
+            stroke="#FFFFFF"
             fill="none"
             strokeWidth="1.5"
         >
