@@ -79,7 +79,7 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  padding: 16px;
 }
 
 .trash-btn{
@@ -93,6 +93,12 @@ body{
   align-items: center;
   border: none;
   cursor: pointer;
+}
+
+.card-header p{
+  font-size: 12px;
+  font-weight: 400;
+  color: #000000;
 }
 
 .card-body{

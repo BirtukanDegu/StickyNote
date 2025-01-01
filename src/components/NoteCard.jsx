@@ -7,6 +7,7 @@ import { db } from "../appwrite/databases";
 import Spinner from '../icons/Spinner';
 import DeleteButton from './DeleteButton';
 import { NoteContext } from '../context/NoteContext';
+import formatDate from '../utils/formatDate';
 
 const NoteCard = ({ note }) => {
     const { setSelectedNote } = useContext(NoteContext);
@@ -16,6 +17,7 @@ const NoteCard = ({ note }) => {
     const [position, setPositon] = useState(JSON.parse(note.position));
     const colors = JSON.parse(note.colors)
     const body = bodyParser(note.body);
+    const [displayDate, setDisplayDate] = useState(note.updated_at || note.$createdAt);
 
     let mouseStartPos = { x: 0, y: 0 };
     const cardRef = useRef(null);
@@ -26,6 +28,10 @@ const NoteCard = ({ note }) => {
         autoGrow(textAreaRef);
         setZIndex(cardRef.current);
     }, []);
+
+    useEffect(() => {
+        setDisplayDate(note.updated_at || note.$createdAt);
+    }, [note.updated_at, note.$createdAt]);
 
     const mouseDown = (e) => {
         if (e.target.className === "card-header") {
@@ -66,13 +72,22 @@ const NoteCard = ({ note }) => {
     };
 
     const saveData = async (key, value) => {
-        const payload = { [key]: JSON.stringify(value) };
+        setSaving(true); 
+        const newUpdatedAt = new Date().toISOString();
+
+        const payload = {
+            [key]: JSON.stringify(value), 
+            updated_at: newUpdatedAt,
+        };
+
         try {
             await db.notes.update(note.$id, payload);
+            setDisplayDate(newUpdatedAt); 
         } catch (error) {
-            console.error(error);
+            console.error("Error saving data:", error);
         }
         setSaving(false);
+
     };
 
     const handleKeyUp = async () => {
@@ -107,13 +122,15 @@ const NoteCard = ({ note }) => {
             >
                 <DeleteButton noteId={note.$id}/>
 
-                {saving && (
+                {saving ? (
                     <div className="card-saving">
                         <Spinner color={colors.colorText} />
-                        <span style={{ color: colors.colorText }}>
+                        <span style={{ color: colors.colorText, fontSize: "12px" }}>
                             Saving...
                         </span>
                     </div>
+                ) : (
+                    <p>{formatDate(displayDate)}</p>
                 )}
             </div>
 

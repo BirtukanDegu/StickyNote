@@ -1,4 +1,4 @@
-const Spinner = ({ color = "#fff", size = "20" }) => {
+const Spinner = ({ color = "#fff", size = "18" }) => {
     return (
         <svg
             className="spinner"
