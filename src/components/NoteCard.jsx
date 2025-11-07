@@ -8,12 +8,13 @@ import {
   uploadImageToBucket,
   deleteImageFromBucket,
   getFileViewUrl,
-} from "../appwrite/storage"; 
+} from "../appwrite/storage";
 import Spinner from "../icons/Spinner";
 import DeleteButton from "./DeleteButton";
 import { NoteContext } from "../context/NoteContext";
 import formatDate from "../utils/formatDate";
 import Attach from "../icons/Attach";
+import ImagePreviewModal from "./ImagePreviewModal";
 
 const NoteCard = ({ note }) => {
   const { setSelectedNote } = useContext(NoteContext);
@@ -26,6 +27,7 @@ const NoteCard = ({ note }) => {
   const [displayDate, setDisplayDate] = useState(
     note.updated_at || note.$createdAt
   );
+  const [previewSrc, setPreviewSrc] = useState(null);
 
   const parseImages = () => {
     if (!note.images) return [];
@@ -64,9 +66,9 @@ const NoteCard = ({ note }) => {
     };
 
     if (key === "images") {
-      payload.images = value; 
+      payload.images = value;
     } else {
-      payload[key] = JSON.stringify(value); 
+      payload[key] = JSON.stringify(value);
     }
 
     try {
@@ -89,13 +91,13 @@ const NoteCard = ({ note }) => {
       const uploadedIds = [];
       for (const file of files) {
         const res = await uploadImageToBucket(file);
-        uploadedIds.push(res.$id); 
+        uploadedIds.push(res.$id);
       }
 
       const newImages = [...images, ...uploadedIds];
       setImages(newImages);
 
-      await saveData("images", newImages); 
+      await saveData("images", newImages);
     } catch (err) {
       console.error(err);
     } finally {
@@ -162,99 +164,108 @@ const NoteCard = ({ note }) => {
   };
 
   return (
-    <div
-      ref={cardRef}
-      className="card"
-      style={{
-        backgroundColor: colors.colorBody,
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      }}
-    >
+    <>
       <div
-        onMouseDown={mouseDown}
-        className="card-header"
-        style={{ backgroundColor: colors.colorHeader }}
+        ref={cardRef}
+        className="card"
+        style={{
+          backgroundColor: colors.colorBody,
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+        }}
       >
-        <DeleteButton noteId={note.$id} />
+        <div
+          onMouseDown={mouseDown}
+          className="card-header"
+          style={{ backgroundColor: colors.colorHeader }}
+        >
+          <DeleteButton noteId={note.$id} />
 
-        {saving ? (
-          <div className="card-saving">
-            <Spinner color={colors.colorText} />
-            <span style={{ color: colors.colorText, fontSize: "12px" }}>
-              Saving...
-            </span>
-          </div>
-        ) : (
-          <p>{formatDate(displayDate)}</p>
-        )}
-      </div>
-
-      <div className="card-body">
-        <textarea
-          ref={textAreaRef}
-          defaultValue={body}
-          style={{ color: colors.colorText }}
-          onInput={() => autoGrow(textAreaRef)}
-          onFocus={() => {
-            setZIndex(cardRef.current);
-            setSelectedNote(note);
-          }}
-          onKeyUp={handleKeyUp}
-        />
-
-        <div className="note-images" style={{ marginTop: 8 }}>
-          {images && images.length > 0 && (
-            <div
-              className="image-grid"
-              style={{ display: "flex", gap: 8, flexWrap: "wrap" }}
-            >
-              {images.map((fileId) => (
-                <div key={fileId} style={{ position: "relative" }}>
-                  <img
-                    src={getFileViewUrl(fileId)}
-                    style={{
-                      width: 120,
-                      height: 120,
-                      objectFit: "cover",
-                      borderRadius: 6,
-                    }}
-                  />
-                  <button
-                    onClick={() => handleRemoveImage(fileId)}
-                    style={{
-                      position: "absolute",
-                      top: 4,
-                      right: 4,
-                      background: colors.colorBody,
-                      color: "black",
-                      border: "none",
-                      borderRadius: 4,
-                      padding: "2px 6px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    ×
-                  </button>
-                </div>
-              ))}
+          {saving ? (
+            <div className="card-saving">
+              <Spinner color={colors.colorText} />
+              <span style={{ color: colors.colorText, fontSize: "12px" }}>
+                Saving...
+              </span>
             </div>
+          ) : (
+            <p>{formatDate(displayDate)}</p>
           )}
+        </div>
 
-          <label style={{ cursor: "pointer", color: "black" }}>
-            <Attach />
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFilesSelected}
-              style={{ display: "none" }}
-            />
-          </label>
+        <div className="card-body">
+          <textarea
+            ref={textAreaRef}
+            defaultValue={body}
+            style={{ color: colors.colorText }}
+            onInput={() => autoGrow(textAreaRef)}
+            onFocus={() => {
+              setZIndex(cardRef.current);
+              setSelectedNote(note);
+            }}
+            onKeyUp={handleKeyUp}
+          />
+
+          <div className="note-images" style={{ marginTop: 8 }}>
+            {images && images.length > 0 && (
+              <div
+                className="image-grid"
+                style={{ display: "flex", gap: 8, flexWrap: "wrap" }}
+              >
+                {images.map((fileId) => (
+                  <div key={fileId} style={{ position: "relative" }}>
+                    <img
+                      src={getFileViewUrl(fileId)}
+                      onClick={() => setPreviewSrc(getFileViewUrl(fileId))}
+                      style={{
+                        width: 120,
+                        height: 120,
+                        objectFit: "cover",
+                        borderRadius: 6,
+                      }}
+                    />
+                    <button
+                      onClick={() => handleRemoveImage(fileId)}
+                      style={{
+                        position: "absolute",
+                        top: 4,
+                        right: 4,
+                        background: colors.colorBody,
+                        color: "black",
+                        border: "none",
+                        borderRadius: 4,
+                        padding: "2px 6px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <label style={{ cursor: "pointer", color: "black" }}>
+              <Attach />
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFilesSelected}
+                style={{ display: "none" }}
+              />
+            </label>
+          </div>
         </div>
       </div>
-    </div>
+      {previewSrc && (
+        <ImagePreviewModal
+          src={previewSrc}
+          onClose={() => setPreviewSrc(null)}
+        />
+      )}
+    </>
   );
 };
 
