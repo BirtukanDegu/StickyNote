@@ -206,7 +206,7 @@ const NoteCard = ({ note }) => {
             onKeyUp={handleKeyUp}
           />
 
-          <div className="note-images" style={{ marginTop: 8 }}>
+          <div className="note-images" style={{ marginBottom: '40px' }}>
             {images && images.length > 0 && (
               <div
                 className="image-grid"
@@ -245,7 +245,7 @@ const NoteCard = ({ note }) => {
               </div>
             )}
 
-            <label style={{ cursor: "pointer", color: "black" }}>
+            <label style={{ cursor: "pointer", color: "black", position: "absolute", bottom: 16, left: 16  }}>
               <Attach />
               <input
                 ref={fileInputRef}
