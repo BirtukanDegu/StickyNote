@@ -1,6 +1,6 @@
-# Sticky Notes App 📌
+# 📌 Memosaic
 
-A simple and interactive web application for creating, managing, and customizing digital sticky notes. Built with modern web technologies, this app allows users to quickly jot down thoughts, reminders, and tasks with an intuitive interface.
+Memosaic is a modern web application for creating and managing visual notes. Its name, a fusion of "memo" and "mosaic," reflects its core philosophy: allowing users to arrange their thoughts, tasks, and media into a beautiful and intuitive visual collage. With Memosaic, you can quickly capture ideas on digital sticky notes, attach images, and customize colors to build an interactive board that is uniquely yours. It's the perfect tool for visual thinkers, creatives, and anyone who wants to organize their ideas beautifully.
 
 ## ✨ Features
 
